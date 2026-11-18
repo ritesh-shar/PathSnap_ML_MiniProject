@@ -1,0 +1,2 @@
+trip_id,usable_points,classifier_top1,hmm_top1,classifier_continuity,hmm_continuity
+00000052,262,0.8625954198473282,0.9007633587786259,0.6794871794871795,0.8289473684210527
