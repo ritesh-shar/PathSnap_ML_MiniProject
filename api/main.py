@@ -27,7 +27,10 @@ ROOT = Path(__file__).resolve().parents[1]
 # Override this with an environment variable when using evaluator_test.
 EVAL_DIR = Path(os.getenv("EVAL_DIR", str(ROOT / "data" / "student_test")))
 MODEL_PATH = Path(
-    os.getenv("MODEL_PATH", str(ROOT / "models" / "mlp.joblib"))
+    os.getenv(
+        "MODEL_PATH",
+        str(ROOT / "models" / "best_model.joblib")
+    )
 )
 
 logging.basicConfig(
@@ -52,7 +55,7 @@ def load_model():
         raise RuntimeError(f"Model not found: {MODEL_PATH}")
 
     model = joblib.load(MODEL_PATH)
-    logger.info("MLP model loaded from %s", MODEL_PATH)
+    logger.info("Classifier loaded from %s", MODEL_PATH)
 
 
 @app.middleware("http")

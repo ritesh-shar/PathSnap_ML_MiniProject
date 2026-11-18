@@ -1,0 +1,15 @@
+{
+  "model": "LightGBM",
+  "features": [
+    "distance_m",
+    "segment_length_m",
+    "heading_difference_rad",
+    "gps_speed_mps",
+    "time_gap_s"
+  ],
+  "n_estimators": 300,
+  "learning_rate": 0.05,
+  "selection": "initial integration baseline",
+  "labels": "provisional route alignment",
+  "tuned": false
+}
