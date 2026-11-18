@@ -1,0 +1,28 @@
+{
+  "feature_names": [
+    "distance_m",
+    "segment_length_m",
+    "heading_difference_rad",
+    "gps_speed_mps",
+    "time_gap_s"
+  ],
+  "classes": [
+    0,
+    1
+  ],
+  "positive_class": 1,
+  "preprocessing": null,
+  "params": {
+    "n_estimators": 316,
+    "learning_rate": 0.02692655251486473,
+    "num_leaves": 84,
+    "max_depth": 4,
+    "min_child_samples": 33,
+    "subsample": 0.7465447373174767,
+    "colsample_bytree": 0.728034992108518,
+    "reg_alpha": 0.1165691561324743,
+    "reg_lambda": 6.267062696005991e-07
+  },
+  "seed": 42,
+  "note": "Pass columns in exactly this order. Use predict_proba(X)[:, 1] as the candidate score."
+}
