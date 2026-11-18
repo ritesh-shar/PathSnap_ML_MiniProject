@@ -91,9 +91,18 @@ def _mlp(seed):
     return make_pipeline(
         StandardScaler(),
         MLPClassifier(
+<<<<<<< HEAD
             hidden_layer_sizes=(64, 32),
             max_iter=200,
             early_stopping=True,
+=======
+            hidden_layer_sizes=(32,),
+            max_iter=30,
+            early_stopping=True,
+            validation_fraction=0.1,
+            n_iter_no_change=5,
+            batch_size=2048,
+>>>>>>> origin/main
             random_state=seed
         )
     )
