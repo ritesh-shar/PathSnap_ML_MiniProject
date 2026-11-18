@@ -41,7 +41,9 @@ def viterbi_decode(
     node_xy,
     probability_col="candidate_probability",
     gap_reset_seconds=30.0,
-    transition_weight=1.0
+    transition_weight=1.0,
+    transition_mode="straight",
+    network_cutoff_m=300.0,
 ):
     """
     Decode one trip's candidate road sequence.
@@ -67,6 +69,21 @@ def viterbi_decode(
 
     starts = arcs["from_node"].to_numpy(dtype=int)
     ends = arcs["to_node"].to_numpy(dtype=int)
+
+    if transition_mode not in ("straight", "network"):
+        raise ValueError("Invalid transition_mode")
+
+    network_distance = None
+
+    if transition_mode == "network":
+        from pathsnap.road_graph import (
+            build_road_graph,
+            make_cached_distance,
+        )
+        graph = build_road_graph(arcs, node_xy)
+        network_distance = make_cached_distance(
+            graph, cutoff_m=network_cutoff_m
+        )
 
     observations = [
         group.reset_index(drop=True)
@@ -137,13 +154,30 @@ def viterbi_decode(
             for k, previous_arc in enumerate(
                 previous["arc_id"]
             ):
-                transition = transition_score(
-                    previous_arc,
-                    current_arc,
-                    starts,
-                    ends,
-                    node_xy
-                )
+                if transition_mode == "network":
+                    previous_arc = int(previous_arc)
+                    current_arc = int(current_arc)
+
+                    if previous_arc == current_arc:
+                        transition = 0.0
+                    else:
+                        source = int(ends[previous_arc])
+                        target = int(starts[current_arc])
+
+                        distance = network_distance(source, target)
+
+                        if not np.isfinite(distance):
+                            transition = -20.0
+                        else:
+                            transition = -distance / 30.0
+                else:
+                    transition = transition_score(
+                        previous_arc,
+                        current_arc,
+                        starts,
+                        ends,
+                        node_xy
+                    )
 
                 total = (
                     previous_scores[k]
