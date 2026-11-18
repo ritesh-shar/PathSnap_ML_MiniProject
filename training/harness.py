@@ -91,7 +91,7 @@ def _mlp(seed):
     return make_pipeline(
         StandardScaler(),
         MLPClassifier(
-<<<<<<< HEAD
+<<<<<<< feature/member3-models
             hidden_layer_sizes=(64, 32),
             max_iter=200,
             early_stopping=True,
@@ -102,7 +102,7 @@ def _mlp(seed):
             validation_fraction=0.1,
             n_iter_no_change=5,
             batch_size=2048,
->>>>>>> origin/main
+>>>>>>> main
             random_state=seed
         )
     )
